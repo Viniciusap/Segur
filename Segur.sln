@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Segur", "Segur\Segur.csproj", "{6458279B-31D1-4E61-82E6-E22B7389A120}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6458279B-31D1-4E61-82E6-E22B7389A120}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6458279B-31D1-4E61-82E6-E22B7389A120}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6458279B-31D1-4E61-82E6-E22B7389A120}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6458279B-31D1-4E61-82E6-E22B7389A120}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BC6CC4D5-E0D0-46D6-B10E-BD0A250EA859}
+	EndGlobalSection
+EndGlobal
