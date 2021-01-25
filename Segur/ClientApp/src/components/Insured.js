@@ -10,7 +10,7 @@ export class Insured extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { Insureds: [], loading: true, Id: 0, Name: '', Age: 0, Address: '',  };
+        this.state = { Insureds: [], loading: true, Id: 0, Name: '', Age: 0, Address: '', };
     }
 
     componentDidMount() {
@@ -142,6 +142,7 @@ export class Insured extends Component {
                 <h1 id="tabelLabel" >Insureds</h1>
                 <p>This component demonstrates fetching data from the server.</p>
                 {contents}
+
 
             </div>
         );

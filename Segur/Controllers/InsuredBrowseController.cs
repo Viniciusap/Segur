@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
 using Segur.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,9 +16,11 @@ namespace Segur.Controllers
     public class InsuredBrowseController : ControllerBase
     {
         private readonly ILogger<InsuredBrowseController> _logger;
-        public InsuredBrowseController(ILogger<InsuredBrowseController> logger)
+        private IConfiguration _configuration;
+        public InsuredBrowseController(ILogger<InsuredBrowseController> logger, IConfiguration Configuration)
         {
             _logger = logger;
+            _configuration = Configuration;
         }
 
         private static readonly string[] Nomes = new[]
@@ -30,13 +35,32 @@ namespace Segur.Controllers
         [HttpGet]
         public IEnumerable<Insured> Get()
         {
+
+
+            MySqlConnection conexao = new MySqlConnection(_configuration.GetConnectionString("ConnMySql"));
+            MySqlCommand comando = new MySqlCommand("SELECT * FROM insured", conexao);
+            MySqlDataReader tabela;
+            try
+            {
+                conexao.Open();
+                tabela = comando.ExecuteReader();
+            }
+            finally
+            {
+                conexao.Close();
+            }
+
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new Insured
             {
                 Id = index,
                 Name = Nomes[rng.Next(Nomes.Length)],
                 Age = rng.Next(18, 91),
-                Address = Enderecos[rng.Next(Enderecos.Length)]
+                BillingAddress = Enderecos[rng.Next(Enderecos.Length)],
+                LegalDocument = 321,
+                ResponsabilityScore = 766,
+                InsuranceId = 1
+
             })
             .ToArray();
         }

@@ -7,10 +7,13 @@ namespace Segur.Entities
 {
     public class Insured
     {
-        public int Id { get; set; }
+        public Int64 Id { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
-        public string Address { get; set; }
+        public string BillingAddress { get; set; }
+        public Int64 LegalDocument { get; set; }
+        public Int64 ResponsabilityScore { get; set; }
+        public Int64 InsuranceId { get; set; }
 
     }
 }
