@@ -14,7 +14,7 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route path='/Insured' component={Insured} />
+            <Route path='/Insured' component={Insured} />
       </Layout>
     );
   }

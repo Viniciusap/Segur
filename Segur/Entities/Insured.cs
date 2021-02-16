@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Dapper.Contrib.Extensions;
 
 namespace Segur.Entities
 {
-    public class Insured
+    [Table("insured")]
+    public class insured
     {
+        [ExplicitKey]
         public Int64 Id { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }

@@ -1,16 +1,30 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, useState } from 'react';
 
 const initialState = {
-    Name: '',
-    Age: 0,
-    Address: '',
+    name: '',
+    age: 0,
+    billingAddress: '',
+    legalDocument: '',
+    responsabilityScore: 0,
+    insuranceId: 0,
+
+    postId: 0
 }
 export class Insured extends Component {
     static displayName = Insured.name;
 
     constructor(props) {
         super(props);
-        this.state = { Insureds: [], loading: true, Id: 0, Name: '', Age: 0, Address: '', };
+        this.state = {
+            Insureds: [], loading: true,
+            Id: 0,
+            name: '',
+            age: 0,
+            billingAddress: '',
+            legalDocument: '',
+            responsabilityScore: 0,
+            insuranceId: 0,
+        }
     }
 
     componentDidMount() {
@@ -31,14 +45,20 @@ export class Insured extends Component {
     }
 
     onSubmit = (e) => {
+        debugger
         e.preventDefault();
         const Insured = {
-            Name: this.state.Name,
-            Age: this.state.Age,
-            Address: this.state.Address,
-            Errors: []
+            Id: 0,
+            Name: this.state.name,
+            Age: this.state.age,
+            billingAddress: this.state.billingAddress,
+            LegalDocument: this.state.legalDocument,
+            ResponsabilityScore: 0 ,//this.state.ResponsabilityScore,
+            InsuranceId: 0 ,//this.state.InsuranceId,
         }
         try {
+            console.log(Insured)
+            this.insertInsured(Insured)
             console.log(Insured)
             this.clear()
             this.setState({ successAdd: true })
@@ -50,9 +70,26 @@ export class Insured extends Component {
     }
 
     async populateInsured() {
-        const response = await fetch('InsuredBrowse');
+        const response = await fetch('/api/InsuredBrowse/all');
         const data = await response.json();
         this.setState({ Insureds: data, loading: false });
+    }
+
+    insertInsured(Insured) {
+        // PUT request using fetch with set headers
+        
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({Insured})
+        };
+        fetch('/api/InsuredBrowse/create', requestOptions)
+            .then(response => response.json())
+            .then(data => this.setState({ postId: data.id }));
+
+            
     }
 
     static renderInsuredsTable(Insureds) {
@@ -70,7 +107,7 @@ export class Insured extends Component {
                         <tr key={Insured.id}>
                             <td>{Insured.name}</td>
                             <td>{Insured.age}</td>
-                            <td>{Insured.address}</td>
+                            <td>{Insured.billingAddress}</td>
                         </tr>
                     )}
                 </tbody>
@@ -85,6 +122,8 @@ export class Insured extends Component {
 
         return (
             <div>
+
+
                 <h1>Cadastro de Segurado</h1>
 
                 <p aria-live="polite">Escreva os dados abaixo</p>
@@ -95,8 +134,8 @@ export class Insured extends Component {
                             <div className="form-group">
                                 <label>Nome: *</label>
                                 <input type="text"
-                                    value={this.state.Name}
-                                    name="Name"
+                                    value={this.state.name}
+                                    name="name"
                                     onChange={this.onChange}
                                     className="form-control" />
                             </div>
@@ -105,8 +144,8 @@ export class Insured extends Component {
                             <div className="form-group">
                                 <label>Idade: *</label>
                                 <input type="text"
-                                    value={this.state.Age}
-                                    name="Age"
+                                    value={this.state.age}
+                                    name="age"
                                     onChange={this.onChange}
                                     className="form-control" />
                             </div>
@@ -114,12 +153,25 @@ export class Insured extends Component {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-10">
+                        <div className="col-md-12">
                             <div className="form-group">
                                 <label>Endereço: *</label>
                                 <input type="text"
-                                    value={this.state.Address}
-                                    name="Address"
+                                    value={this.state.billingAddress}
+                                    name="billingAddress"
+                                    onChange={this.onChange}
+                                    className="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="form-group">
+                                <label>CPF: *</label>
+                                <input type="text"
+                                    value={this.state.legalDocument}
+                                    name="legalDocument"
                                     onChange={this.onChange}
                                     className="form-control" />
                             </div>
@@ -128,7 +180,7 @@ export class Insured extends Component {
 
                     <div className="row">
                         <div className="col-md-1">
-                            <button className="btn btn-primary" type="submit">
+                            <button className="btn btn-primary" type="submit" onClick={this.onSubmit}>
                                 Salvar
                             </button>
                         </div>
